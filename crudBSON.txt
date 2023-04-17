@@ -1,0 +1,112 @@
+cd C:\Program Files\MongoDB\mongosh-1.8.0-win32-x64\mongosh-1.8.0-win32-x64\bin
+C:\Program Files\MongoDB\Server\6.0\bin
+
+//Inserindo
+
+var dados = [ 
+{
+  Nome: 'Estruturas de dados', 
+  Autor: 'Rossetti', 
+  Novo: false, 
+  ISBN: 12345678, 
+  Valor: 171.13},
+ 
+{
+  Nome: 'Engenharia de software', 
+  Professor: 'Rita', 
+  Cod: 'FES', Mes: 2}, 
+{
+  Nome: 'Inglês instrumental', 
+  Autor: 'Ana', 
+  Novo: false, 
+  ISBN: 45678901, 
+  Valor: 122.99},
+ 
+{
+  Nome: 'Interfaces com usuário',
+  Professor: 'André', 
+  Cod: 'IU', 
+  Mes: 2},
+ 
+{
+  Nome: 'Programação orientada a objeto', 
+  Autor: 'Gatti', 
+  Novo: true, 
+  ISBN: 23456789, 
+  Valor: 161.16},
+{
+  Nome: 'Modelagem orientada a objeto', 
+  Professor: 'Rodrigo', 
+  Cod: 'MOO1', 
+  Mes: 2}, 
+{
+  Nome: 'Banco de dados', 
+  Autor: 'Angélica', 
+  Novo: true, 
+  ISBN: 34567890, 
+  Valor: 133.29},
+ 
+{
+  Nome: 'Gestão empresarial', 
+  Autor: ' Silva', 
+  Professor: 'Silva', 
+  Novo: true, 
+  Cod: 'GE', 
+  Mes: 2, 
+  ISBN: 56789012, Valor: 156.55}
+]
+
+db.grade.insert(dados);
+
+//Consultando
+
+db.emp.find({Dependentes:{$in:["Rosa", "Hugo"]}}); Retorna os docs q tem esses nomes dentro de dependentes
+db.emp.find({Dependentes:{$nin:["Rosa", "Rita"]}});Retorna os docs q não tem esses nomes dentro de dependentes
+db.emp.find({Dependentes:{$all:["Rita", "Ana"]}});Retorna todos os docs q tem esses nomes dentro de dependentes
+
+db.emp.find({Dependentes:{$exists: true}}).count()
+ou                                                   Retorna quantos doc tem dependentes
+db.emp.find({Dependentes:{$exists: false}}).count()
+db.emp.find({Idade:22},{_id:0, Idade:0, Cargo:0}); Projeção: indica quais dados serão trazidos pelo find()
+REGEX
+db.emp.find({Nome:{$regex:"^B"}}); nomes que comecam com B
+db.emp.find({Nome:{$regex:"^B", $options: 'i'}}); nomes que começam com B case insensitive
+db.emp.find({Nome:{$regex:"i"}}); nomes que tem i minusculo
+db.emp.find({Nome:{$regex:"i", $options: 'i'}}); nomes que tem i case insensitive
+db.emp.find({Nome:{$regex:"s$"}}); nomes que terminam com S
+
+//Alterando
+
+db.emp.insert({Nome: "Ana", idade: 22});
+db.emp.find({Nome: "Ana"});
+db.emp.update({Nome: "Ana"}, {$inc: { idade: 5}}); Atualizei a Ana inserindo uma chave
+db.emp.find({Nome: "Ana"});
+
+db.emp.update({Nome: "Ana"}, {$set: { idade: 22}});
+db.emp.find({Nome: "Ana"});
+db.emp.update({Nome: "Ana"}, {$set: { salario: 15000}}); Atualiza um campo
+db.emp.find({Nome: "Ana"});
+db.emp.find({Nome: "Ana"});
+db.emp.update({Nome:"Ana"},{$rename:{"salario":"salario"}});
+db.emp.find({Nome: "Ana"}); Renomeia um campo
+
+//Deleção
+
+db.emp.find({Nome: "Ana"});
+db.emp.update({Nome:"Ana"},{$unset:{salario:""}}); Atualiza e apaga um campo especifico
+db.emp.find({Nome: "Ana"});
+
+db.apaga.insert({cod:7369,nome:"Maria",cargo:"DBA"});
+db.apaga.insert({cod:7499,nome:"Rosa",cargo:"DBA"});
+db.apaga.insert({cod:7521,nome:"Ana",cargo:"DBA"});
+db.apaga.insert({cod:7566,nome:"Rita",cargo:"DBA"});
+db.apaga.find();
+db.apaga.remove({cod:{$gt:7521}}); Remove so o valor do campo "cod" so p quem te-lo maior= que 7521
+db.apaga.find();
+db.apaga.remove({cargo:"DBA"},true); Remove so o valor do campo "cargo" equivalente a DBA true
+db.apaga.find();
+db.apaga.remove({}); apaga todos os documentos
+db.apaga.find();
+show collections;
+db.apaga.drop(); apaga toda a coleção
+show collections;

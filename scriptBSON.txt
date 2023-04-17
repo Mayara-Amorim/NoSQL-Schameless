@@ -1,0 +1,350 @@
+
+//Criando as 3 coleções;
+db.createCollection(″carros″)
+db.createCollection(″usuarios″)
+db.createCollection(″reservas″)
+
+//Visualizando as 3 coleções;
+show collections;
+
+
+
+// ==> Começando ações CRUD para <CARROS>;
+
+
+//Inserindo 3 documentos;
+var dadosCarros = [
+{
+"marca":"Audi",
+"modelo":"xpto01",
+"placa": "xyza8ba",
+"ano": 2022,
+"autonomiaMetros":500,
+"tipo_bateria":"Ions de Litio",
+"velocidade_km_h":360,
+"preço":300.000,
+"localização": null,
+{
+"marca":"Mazda",
+"modelo":"xpto02",
+"placa": "xyza8bb",
+"ano": 2023,
+"autonomiaMetros": 560,
+"tipo_bateria":"Ions de Litio",
+"velocidade_km_h":358,
+"preço":260.000,
+"localização":"USA California",
+"contrato_h": 50,
+{
+"marca":"Tesla",
+"modelo":"xpto03",
+"placa": "xyza8bc",
+"ano": 2019,
+"autonomiaMetros":634,
+"tipo_bateria":"Ions de Litio",
+"velocidade_km_h":350,
+"preço":310.000,
+"localização":"São Paulo/Brasil"}
+]
+
+db.carros.insert(dadosCarros);
+
+//Buscando e lendo dados;
+db.carros.find().pretty();
+db.carros.find({marca:"Tesla"});
+db.carros.find().sort({modelo:1});
+db.carros.find({marca:{$regex:"m", $options: 'm'}});
+db.carros.find({marca:{$regex:"^r", $options: 'r'}})
+db.carros.find({ano: 2021}).pretty();
+
+
+//Atualizado dados;
+db.carros.find({modelo:"xpto03"});
+db.carros.update({modelo:"xpto03"}, {$set:{ano: 2020}});
+db.carros.find({modelo:"xpto03"});
+
+db.carros.find({modelo:"xpto02"});
+db.carros.update({modelo:"xpto02"},{$unset:{contrato_h""}});
+db.carros.find({modelo:"xpto02"});
+
+//Deletando ou apagando dados;
+db.carros.remove({modelo:"xpto01"},true);
+db.carros.remove({});
+db.carros.drop();
+
+
+
+//
+
+
+// ==> Começando ações CRUD para <Usuarios>;
+
+
+//Inserindo 3 documentos;
+var dadosUsuarios = [
+{
+"nome":"Ricardo Santos Velasques Bittencourt",
+"endereço":"Av. Lins de Vasconcelos",
+"e-mail":"ricardo_santos@gmail.com",
+"telefone":"1199999999",
+"históricoAlugueis":[
+{
+"data":null,
+"texto":"Mussum Ipsum, cacilds vidis litro abertis.",
+"carros":[
+{
+"marca":"Tesla",
+"modelo":"xpto001",
+"placa": "xyza8bc6",
+"ano": 2012,
+"autonomiaMetros":500,
+"tipo_bateria":"Ions de Litio",
+"velocidade_km_h":300,
+"preço":110.000,
+"localização":"São Paulo/Brasil"
+}
+]
+},
+{
+"data":null,
+"texto":"Atirei o pau no gatis, per gatis num morreus.A ordem dos tratores não altera o pão duris.",
+"carros":[
+{
+"marca":"Tesla",
+"modelo":"xpto00",
+"placa": "xyza8bcc",
+"ano": 2010,
+"autonomiaMetros":600,
+"tipo_bateria":"Ions de Litio",
+"velocidade_km_h":300,
+"preço":210.000,
+"localização":"São Paulo/Brasil"
+}
+]
+}
+]
+},
+
+{
+"nome":"Bozonaro",
+"endereço":"Qualquer lugar por ai, Brasilia/DF",
+"e-mail":"lulamolusco@hotmail.com",
+"telefone":"1499999999",
+"históricoAlugueis":[
+{
+"data":null,
+"texto":"Sapien in monti palavris qui num significa nadis i pareci latim",
+"carros":[
+{
+"marca":"Nissam",
+"modelo":"xpto04",
+"placa": "xyza8bd",
+"ano": 2019,
+"autonomiaMetros":534,
+"tipo_bateria":"Ions de Litio",
+"velocidade_km_h":330,
+"preço":180.000,
+"localização":"São Paulo/Brasil"
+}
+]
+},
+{
+"data":null,
+"texto":"Detraxit consequat et quo num tendi nada.Quem manda na minha terra sou euzis",
+"carros":[
+{
+"marca":"Tesla",
+"modelo":"xpto03",
+"placa": "xyza8bc",
+"ano": 2019,
+"autonomiaMetros":634,
+"tipo_bateria":"Ions de Litio",
+"velocidade_km_h":350,
+"preço":310.000,
+"localização":"São Paulo/Brasil"
+}
+]
+}
+]
+},
+{
+"nome":"Vanessa Weber",
+"endereço":"Jardim Satélite, São José dos Campos",
+"e-mail":"vanessaWeber@contato.com",
+"telefone":"1299999999",
+"históricoAlugueis":[
+{
+"data":null,
+"texto":"Mussum Ipsum, cacilds vidis litro abertis.",
+"carros":[
+{
+"marca":"Audi",
+"modelo":"xpto06",
+"placa": "xyza8bf",
+"ano": 2022,
+"autonomiaMetros":534,
+"tipo_bateria":"Ions de Litio",
+"velocidade_km_h":330,
+"preço":180.000,
+"localização":"São Paulo/Brasil"
+}
+]
+},
+{
+"data":null,
+"texto":"Mais vale um bebadis conhecidiss, que um alcoolatra anonimis",
+"carros":[
+{
+"marca":"Toyota",
+"modelo":"xpto05",
+"placa": "xyza8be",
+"ano": 2019,
+"autonomiaMetros":634,
+"tipo_bateria":"Ions de Litio",
+"velocidade_km_h":350,
+"preço":310.000,
+"localização":"São Paulo/Brasil"
+}
+]
+
+}
+]
+}
+]
+
+db.usuarios.insert(dadosUsuarios);
+
+//Buscando e lendo dados;
+db.usuarios.find().pretty();
+db.usuarios.find({nome:"Vanessa"});
+db.usuarios.find().sort({nome:1});
+db.usuarios.find({nome:{$regex:"s", $options: 's'}});
+db.usuarios.find({nome:{$regex:"^R", $options: 'r'}})
+db.usuarios.find({e-mail: "ricardo_santos@gmail.com"}).pretty();
+
+
+//Atualizado dados;
+db.usuarios.find({nome:"Vanessa Weber"});
+db.usuarios.update({nome:"Vanessa Weber"}, {$set:{endereço:"Jardim Satélite, São José dos Campos/SP"}});
+db.usuarios.find({nome:"Vanessa Weber"});
+
+db.usuarios.find({nome:"Bozonaro"});
+db.usuarios.update({nome:"Bozonaro"},{$unset:{históricoAlugueis:""}});
+db.usuarios.find({nome:"Bozonaro"});
+
+//Deletando ou apagando dados;
+db.usuarios.remove({nome:"Ricardo Santos Velasques Bittencourt"},true);
+db.usuarios.remove({});
+db.usuarios.drop();
+
+
+//Começando ações CRUD para <Reservas>;
+
+
+
+//Inserindo 3 documentos;
+var dadosReservas = [
+{
+"data":null,
+
+"carros":[
+{
+"marca":"Audi",
+"modelo":"xpto06",
+"placa": "xyza8bf",
+"ano": 2022,
+"autonomiaMetros":534,
+"tipo_bateria":"Ions de Litio",
+"velocidade_km_h":330,
+"preço":180.000,
+"localização":"São Paulo/Brasil"
+}
+],
+"usuarios":[
+{"nome":"Vanessa Weber",
+"endereço":"Jardim Satélite, São José dos Campos",
+"e-mail":"vanessaWeber@contato.com",
+"telefone":"1299999999",
+}
+],
+"duraçãoReserva_horas":90,
+"preçoReserva":900.00}
+]
+
+db.reservas.insert(dadosReservas);
+
+db.reservas.insert({
+"data":null,
+
+"carros":[
+{
+"marca":"Renault",
+"modelo":"xpto09",
+"placa": "xyza8bg",
+"ano": 2023,
+"autonomiaMetros":534,
+"tipo_bateria":"Ions de Litio",
+"velocidade_km_h":160,
+"preço":80.000,
+"localização":"Rio Janeiro/Brasil"
+}
+],
+"usuarios":[
+{"nome":"Rodrigo Cardoso",
+"endereço":"Volta Redonda, Rio de Janeiro/RJ",
+"e-mail":"rodrigo@contato.com",
+"telefone":"1299999998",
+}
+],
+"duraçãoReserva_horas":48,
+"preçoReserva":400.00}
+);
+
+db.reservas.insert({
+"data":null,
+
+"carros":[
+{
+"marca":"BMW",
+"modelo":"xpto010",
+"placa": "xyza8bhh",
+"ano": 2023,
+"autonomiaMetros":670,
+"tipo_bateria":"Ions de Litio",
+"velocidade_km_h":370,
+"preço":380.000,
+"localização":"Brasilia/DF"
+}
+],
+"usuarios":[
+{"nome":"Bob Dylan",
+"endereço":"Londres, Reino Unido",
+"e-mail":"dylan_cantor@contato.com",
+"telefone":"5801299999998",
+}
+],
+"duraçãoReserva_horas":120,
+"preçoReserva":1.200.00}
+);
+
+//Buscando e lendo dados;
+db.reservas.find().pretty();
+db.reservas.find({preço:{$al:300.00});
+db.carros.find().sort({preçoReserva:-1});
+
+//Atualizado dados;
+db.reservas.find({modelo:"xpto03"});
+db.reservas.update({"carros.placa": "xyza8bg"},{$set: {"usuarios.nome": "Fernando Silva",
+"duraçãoReserva_horas": 72,"preçoReserva": 600.00}})
+db.reservas.find().pretty();
+
+//Deletando ou apagando dados;
+db.reservas.remove({preçoReserva:400.00},true);
+db.reservas.remove({});
+db.reservas.drop();
+
+
+
+
+
+
